@@ -10,7 +10,7 @@ use Observer\Store\BathStore;
 use Observer\Store\SoftFurnitureStore;
 use Observer\Store\TableStore;
 
-class ObserverPatternControl
+class ObserverPatternControl implements PatternControlInterface
 {
     public function execute(): void
     {
