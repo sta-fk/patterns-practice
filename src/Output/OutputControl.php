@@ -7,10 +7,12 @@ namespace Output;
 class OutputControl
 {
     private StrategyPatternControl $strategyPattern;
+    private ObserverPatternControl $observerPattern;
 
     public function __construct()
     {
         $this->strategyPattern = new StrategyPatternControl();
+        $this->observerPattern = new ObserverPatternControl();
     }
 
     public function executeHelloWorld(): void
@@ -21,5 +23,10 @@ class OutputControl
     public function executeStrategy(): void
     {
         $this->strategyPattern->execute();
+    }
+
+    public function executeObserver(): void
+    {
+        $this->observerPattern->execute();
     }
 }
