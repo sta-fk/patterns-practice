@@ -10,3 +10,4 @@ spl_autoload_register(function ($className)
 
 $output = new \Output\OutputControl();
 $output->executeHelloWorld();
+$output->executeStrategy();
