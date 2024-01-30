@@ -1,5 +1,10 @@
 <?php
 
+use Output\BaseHtmlControl;
+use Output\StrategyPatternControl;
+use Output\ObserverPatternControl;
+use Output\DecoratorPatternControl;
+
 spl_autoload_register(function ($className)
 {
     $root = dirname(__DIR__);
@@ -8,7 +13,15 @@ spl_autoload_register(function ($className)
     require $fileName;
 });
 
-$output = new \Output\OutputControl();
-$output->executeHelloWorld();
-$output->executeStrategy();
-$output->executeObserver();
+$baseHtmlOutput = new BaseHtmlControl();
+$baseHtmlOutput->addHeadHtml();
+$baseHtmlOutput->addCss();
+$baseHtmlOutput->execute();
+
+$strategy = new StrategyPatternControl();
+$observer = new ObserverPatternControl();
+$decorator = new DecoratorPatternControl();
+
+$strategy->execute();
+$observer->execute();
+$decorator->execute();

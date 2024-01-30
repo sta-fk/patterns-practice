@@ -10,7 +10,7 @@ use Strategy\ModeOfTransport\BicycleMode;
 use Strategy\ModeOfTransport\BusMode;
 use Strategy\ModeOfTransport\TaxiMode;
 
-class StrategyPatternControl
+class StrategyPatternControl implements PatternControlInterface
 {
     private const CLIENT = 'Rick';
     private const ARRIVAL_POINT = '219 India St, Brooklyn, NY 11222';
