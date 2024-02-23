@@ -12,43 +12,64 @@ use Observer\Store\TableStore;
 
 class ObserverPatternControl implements PatternControlInterface
 {
+    private FurnitureStorage $furnitureStorage;
+    private BathStorage $bathStorage;
+
+    private TableStore $tableStore;
+    private BathStore $bathStore;
+    private SoftFurnitureStore $softFurnitureStore;
+
     public function execute(): void
     {
         echo '<h2>Design pattern Observer</h2>';
 
-        $furnitureStorage = new FurnitureStorage(10, 10, 10);
-        $bathStorage = new BathStorage(10, 10);
-        $bathStore = new BathStore($bathStorage);
-        new TableStore($furnitureStorage);
-        new SoftFurnitureStore($furnitureStorage);
+        $this->initializeStorages(10);
+        $this->initializeStores();
 
         echo 'On start: 10 baths, 10 showers, 10 beds, 10 sofa, 10 tables';
+        echo '<br/>';
 
-        echo '<br/>';
-        echo '<b>-3 bath</b>';
-        echo '<br/>';
-        $bathStorage->buyBath(3);
+        $this->displayChanges('-3 bath');
+        $this->bathStorage->buyBath(3);
 
-        echo '<b>-8 tables</b>';
-        echo '<br/>';
-        $furnitureStorage->buyTable(8);
+        $this->displayChanges('-8 tables');
+        $this->furnitureStorage->buyTable(8);
 
         echo '<br/>';
         echo '<i>Bath store unfollow</i>';
         echo '<br/>';
-        $bathStorage->removeObserver($bathStore);
+        $this->bathStorage->removeObserver($this->bathStore);
 
-        echo '<b>-2 bath</b>';
-        echo '<br/>';
-        $bathStorage->buyBath(2);
-        echo 'In Bath storage: ' . $bathStorage->getBath() . ' baths';
+        $this->displayChanges('-2 bath');
+        $this->bathStorage->buyBath(2);
+
+        echo 'In Bath storage: ' . $this->bathStorage->getBath() . ' baths';
         echo '<br/><br/>';
 
         echo '<i>Having a new bath store</i>';
         echo '<br/>';
-        new BathStore($bathStorage);
-        echo '<b>-2 bath</b>';
+        new BathStore($this->bathStorage);
+
+        $this->displayChanges('-2 bath');
+        $this->bathStorage->buyBath(2);
+    }
+
+    private function initializeStorages(int $count): void
+    {
+        $this->furnitureStorage = new FurnitureStorage($count, $count, $count);
+        $this->bathStorage = new BathStorage($count, $count);
+    }
+
+    private function initializeStores(): void
+    {
+        $this->bathStore = new BathStore($this->bathStorage); // to delete later
+        $this->tableStore = new TableStore($this->furnitureStorage);
+        $this->softFurnitureStore = new SoftFurnitureStore($this->furnitureStorage);
+    }
+
+    private function displayChanges(string $message): void
+    {
+        echo '<b>' . $message . '</b>';
         echo '<br/>';
-        $bathStorage->buyBath(2);
     }
 }
