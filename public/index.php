@@ -1,6 +1,9 @@
 <?php
 
 use Output\BaseHtmlControl;
+use Output\FactoryPatternControl\AbstractFactoryPatternControl;
+use Output\FactoryPatternControl\FactoryMethodPatternControl;
+use Output\FactoryPatternControl\SimpleFactoryPatternControl;
 use Output\StrategyPatternControl;
 use Output\ObserverPatternControl;
 use Output\DecoratorPatternControl;
@@ -21,7 +24,13 @@ $baseHtmlOutput->execute();
 $strategy = new StrategyPatternControl();
 $observer = new ObserverPatternControl();
 $decorator = new DecoratorPatternControl();
+$simpleFactory = new SimpleFactoryPatternControl();
+$factoryMethod = new FactoryMethodPatternControl();
+$abstractFactory = new AbstractFactoryPatternControl();
 
 $strategy->execute();
 $observer->execute();
 $decorator->execute();
+$simpleFactory->execute();
+$factoryMethod->execute();
+$abstractFactory->execute();

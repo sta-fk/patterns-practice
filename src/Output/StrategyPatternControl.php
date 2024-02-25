@@ -20,23 +20,28 @@ class StrategyPatternControl implements PatternControlInterface
     public function execute(): void
     {
         echo '<h2>Design pattern Strategy</h2>';
-        echo sprintf(
-            '<p>I\'m %s. We need to know the price of how to get from <i>%s</i> to <i>%s</i> by taxi, bicycle and bus</p>',
-            self::CLIENT,
-            self::ARRIVAL_POINT,
-            self::DESTINATION,
-        );
+        $this->displayInitialData();
 
         $onlineClientApplication = $this->createOnlineApplication();
 
         echo 'Hello, ' . $onlineClientApplication->getClientName();
         echo '<br/>';
 
-        $this->aboutModeOfTransport($onlineClientApplication);
+        $this->displayModeOfTransport($onlineClientApplication);
         $onlineClientApplication->setModeOfTransport(new BicycleMode(self::MILEAGE));
-        $this->aboutModeOfTransport($onlineClientApplication);
+        $this->displayModeOfTransport($onlineClientApplication);
         $onlineClientApplication->setModeOfTransport(new BusMode());
-        $this->aboutModeOfTransport($onlineClientApplication);
+        $this->displayModeOfTransport($onlineClientApplication);
+    }
+
+    private function displayInitialData(): void
+    {
+        echo sprintf(
+            '<p>I\'m %s. We need to know the price of how to get from <i>%s</i> to <i>%s</i> by taxi, bicycle and bus</p>',
+            self::CLIENT,
+            self::ARRIVAL_POINT,
+            self::DESTINATION,
+        );
     }
 
     private function createOnlineApplication(): OnlineClientApplication
@@ -50,7 +55,7 @@ class StrategyPatternControl implements PatternControlInterface
         );
     }
 
-    private function aboutModeOfTransport(AbstractApplication $abstractApplication): void
+    private function displayModeOfTransport(AbstractApplication $abstractApplication): void
     {
         echo $abstractApplication->getTransportName() . ': ' .$abstractApplication->getTransportCost();
         echo '<br/>';
